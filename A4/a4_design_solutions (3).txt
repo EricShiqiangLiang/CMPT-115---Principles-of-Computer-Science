@@ -1,0 +1,302 @@
+************************************************************************
+Assignment 4 Exercise 5
+************************************************************************
+
+Student
+	refToChar firstName
+	refToChar lastName
+	Integer studentNumber
+	refToChar NSID
+	refToFloat assignments
+	Float midterm
+	Float final
+end Student
+
+
+Algorithm createStudentRecord()
+Pre: none
+Post: student record created
+Return: reference to newly created student record
+
+	refToStudent s <- allocate new Student
+	return s
+
+
+---
+Algorithm destroyStudentRecord(s)
+Pre:	s :: refToStudent
+Post:	Student record s and fields deallocated
+Return:	nothing
+
+	if s != null
+	then
+		deallocate s->firstName
+		deallocate s-> lastName
+		deallocate s-> NSID
+		deallocate s-> assignments
+		deallocate s
+	end
+
+
+---
+Algorithm displayStudentRecord(s)
+Pre:	s :: refToStudent
+Post:	fields in s displayed to console
+Return: nothing
+
+	if s != NULL
+	then
+		print "Name: " s->firstName s->lastName
+		print "Student Number: " s->studentNumber
+		print "NSID: " s->NSID
+		print "Assignments: "
+	
+		for i from 0 to 10 by 1 do
+			print i s->assignments[i]
+		end
+	
+		print "Midterm: " s->midterm
+		print "Final: " s->final
+	end
+
+
+---
+Algorithm copyString(s)
+This is a helper function, to ensure that we never make a 
+mistake copying a C-string.  It's not part of the Student ADT Interface
+Pre:	s is a reference to a CString
+Post:   allocates new memory for a copy of s
+Return: reference to the new copy
+
+    refToChar copy <- allocate new Char[strlen(s) + 1]
+    strcpy(copy, s)
+    return copy
+
+
+---
+Algorithm readStudentRecordFromConsole()
+Pre:	nothing
+Post:	creates new student record and populates fields from console
+Return: refToStudent -- newly created student record
+
+	Char firstName[100]
+	Char lastName[100]
+	Char NSID[100]
+	Float midterm 
+	Float final 
+
+	Student newStudent <- createStudentRecord()
+
+	if newStudent != NULL
+	then
+		read firstName
+		newStudent->firstName <- copyString(firstName)
+
+		read lastName
+		newStudent->lastName <- copyString(lastName)
+
+		read newStudent->studentNumber
+
+		read NSID	
+		newStudent->NSID <- copyString(NSID)
+
+		newStudent->assignments <- allocate new Integer[10]
+		for i from 0 to 10 by 1 do
+			read newStudent->assignments[i]
+		end
+	
+		read newStudent->midterm
+		read newStudent->final
+	done
+
+	return newStudent
+
+
+
+---
+Algorithm ChangeAssignmentGradeForStudent(s, a, g)
+Pre:	s :: refToStudent
+		a :: Integer -- assignment number
+		g :: Integer -- amount to add to grade
+Post:	adds g marks to assignment number a for student s
+Return: nothing
+
+	if s != NULL
+	then
+		s->assignments[a] <- s->assignments[a] + g
+	done
+
+
+---
+Algorithm ChangeExamGradeForStudent(s, x, e)
+Pre:	s :: refToStudent
+		x :: Char -- 'M' if midterm, 'F' if final
+		e :: Integer -- amount to add to exam grade
+Post:	adds e marks to exam (Midterm or Final) for student s
+Return: nothing
+
+	if s != NULL
+	then
+		if x == 'M'
+		then
+			s->midterm <- s->midterm + e
+		else if x == 'F'
+		then
+			s->final <- s->final + e
+		else
+	
+		done
+	done
+
+
+---
+Algorithm calculateAverageGrade(s)
+Pre:	s :: refToStudent
+Post:	calculates student average final grade
+Return:	Float -- final average grade for student
+
+	if s != NULL
+	then
+		Float midterm <- s->midterm * 0.25
+		Float final <- s->final * 0.45
+		Float assignmentTotal <- 0
+	
+		for i from 0 to 10 by 1 do
+			assignmentTotal <- assignmentTotal + s->assignments[i]
+		end	
+	
+		assignmentTotal <- assignmentTotal / 10
+		assignmentTotal <- assignmentTotal * 0.30
+	
+		return midterm + final + assignmentTotal
+	done
+
+---
+Algorithm main()
+Pre:	nothing
+Post:	create 10 students, get info from console, print students, calculate class average
+Return:	nothing
+
+
+	refToRefToStudent students <- allocate new refToStudent[10]
+	Float classTotal <- 0
+	Float classAverage <- 0
+
+	for i from 0 to 10 by 1 do
+		students[i] <- readStudentRecordFromConsole()
+	done
+
+	for i from 0 to 10 by 1 do
+		displayStudentRecord(students[i])
+	done
+
+	for i from 0 to 10 by 1 do
+		classTotal <- calculateAverageGrade(students[i])
+	done
+
+	classAverage <- classTotal / 10
+
+	print "The class average is " classAverage
+
+
+
+************************************************************************
+Assignment 4 Exercise 6
+************************************************************************
+
+TrainCar
+	refToChar type
+	Float capacity
+	Integer serial
+	refToTrainCar next
+end TrainCar
+
+
+---
+Algorithm createTrainCar(kind, cargo, serial)
+Pre:	kind   :: refToChar -- cstring describing type of train
+		cargo  :: Integer -- weight capacity of train, in Kg
+		serial :: Integer -- unique serial number to identify TrainCar
+Post:	new train allocated with provided fields
+Return:	refToTrainCar -- newly created train
+
+	refToTrainCar newTrain <- allocate new TrainCar
+	newTrain->type <- allocate new Char[strlen(kind) + 1]
+	strcpy(newTrain->type, kind)
+	newTrain->cargo <- cargo
+	newTrain->serial <- serial
+
+	return newTrain
+
+---
+Algorithm connectTrains(front, back)
+Pre:	front :: refToTrainCar -- pointer to first TrainCar in first train
+		back  :: refToTrainCar -- pointer to first TrainCar in second train
+Post:	last car in front now points to first car in back
+Return:	nothing
+
+	refToTrainCar trainWalker
+	refToTrainCar tmpCar
+	trainWalker <- front
+
+	// if the first train is not a train at all!
+	if (front == NULL) then 
+		return 
+	endif
+	
+	// walk along until you reach the end of the front train
+	while trainWalker != NULL do
+		 tmpCar <- trainWalker
+		 trainWalker <- trainWalker->next
+	done
+
+	// now attach the back train on to the end
+	tmpCar->next <- back
+
+
+---
+Algorithm disconnectCars(train, serial)
+Pre:	train  :: refToTrainCar -- pointer to first TrainCar in train to be disconnected
+		serial :: Integer -- serial number of car to be disconnected after
+Post:	train is disconnected after TrainCar with serial number
+Return:	refToTrainCar -- second newly created train from split
+
+	refToTrainCar trainWalker, tmpCar
+	trainWalker <- train
+
+	// walk along until the end, or unti you find the car
+	while (trainWalker != NULL) and (trainWalker->serial != serial) do
+		trainWalker <- trainWalker->next
+	done
+
+	// if you didn't find it, return NULL
+	if trainWalker == NULL do
+		return NULL
+	done
+
+	// remember the car that's disconnected
+	tmpCar <- trainWalker->next
+	trainWalker->next <- NULL
+
+	return tmpCar
+
+
+---
+Algorithm printTrain(train)
+Pre:	train :: refToTrainCar -- train to be printed
+Post:	all TrainCars in train are printed
+Return: nothing
+
+	refToTrainCar luke <- train  
+
+	while luke != NULL do
+		print luke->type
+		print luke->capacity
+		print luke->serial
+		print newline
+		luke <- luke->next
+	done
+
+
+
+

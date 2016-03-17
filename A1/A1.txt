@@ -1,0 +1,28 @@
+Background
+A Magic Square is an arrangement of numbers in square, so that every row, column, and diagonal add up to the
+same value. Below are two squares, but only one of them is a Magic Square.
+8 1 6 
+3 5 7
+4 9 2
+
+1 9 6
+5 3 7
+4 8 2
+
+The square on the left is a 3 ¡Á 3 magic square, whose rows, columns, and diagonals all sum to 15. On the right, is a
+3 ¡Á 3 square of numbers whose rows columns and diagonals don¡¯t have the same sum.
+There are magic squares of all sizes, but we¡¯ll be concerned with 3¡Á3 squares, and checking if a given arrangement
+of 9 numbers is a magic square or not.
+Definition: A 3 ¡Á 3 magic square is formally defined by the following three criteria:
+? It contains the integers 1 through 9 inclusively.
+? Every integer in the range 1 through 9 appears exactly once.
+? Every row, column, and diagonal sums to 15.
+
+Task
+In this assignment you will implement a program that does the following:
+? It asks the user for a sequence of 9 numbers. The order of the numbers is important, as the rows of the grid
+use this order.
+? It checks whether the sequence of numbers is a magic square or not. Your program should display the message
+¡°Yes!¡± if it¡¯s magic, or ¡°No!¡± if it¡¯s not.
+It¡¯s very important to point out that you are not being asked to construct a magic square; only to check if a
+square is magic or not.

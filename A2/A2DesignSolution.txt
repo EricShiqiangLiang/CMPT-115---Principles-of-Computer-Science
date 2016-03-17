@@ -1,0 +1,317 @@
+CMPT 115
+Assignment 2 Design Solution
+
+
+Exercise 5:
+
+	Application's Purpose:
+	To determine if a given arrangement of 9 numbers is a latin square or not.
+	------
+	
+	Algorithm checkRange(array, size)
+	Checks if every number between 1 and size appears in array exactly once.
+	
+	Pre:    array :: shared arrayOfIntegers
+	        size  ::  Integer -- the length of array
+	Post:   array is unchanged
+	Return: true if numbers are all present and valid, false otherwise
+	
+	
+	arrayOfBooleans seen
+	
+	for i from 0 to size by one do
+	    seen[i] <- False
+	done
+
+	for i from 0 to size by one do
+	    Integer value <- array[i]
+	    seen[value-1] <- True
+	done
+	    
+	for i from 0 to size by one do
+	    if seen[i] == False
+	    then
+	        return False
+	    done
+	done
+	
+	return True
+	    
+	------
+	
+	Algorithm checkRows(square, size)
+	Checks that every row in square contains every number from 1 to size exactly once
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        size   ::   Integer -- the length of the width or height of square
+	Post:   square is unchanged
+	Return: true if all rows are correctly in range, false otherwise
+	
+	
+	for i from 0 to size by one do
+	    arrayOfIntegers arr
+	    for j from 0 to size by one do
+	        arr[j] <- square[i][j]
+	    done
+	    if checkRange(arr, size) == False
+	    then
+	        return False
+	    done
+	done
+	
+	
+	------
+	
+	Algorithm checkColumns(square, size)
+	Checks that every column in square contains every number from 1 to size exactly once
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- the length of the width or height of square
+	Post:   square is unchanged
+	Return: true if all columns are correctly in range, false otherwise
+	
+	for i from 0 to size by one do
+	    arrayOfIntegers arr
+	    for j from 0 to size by one do
+	        arr[j] <- square[j][i]
+	    done
+	    if checkRange(arr, size) == False
+	    then
+	        return False
+	    done
+	done
+	
+	------
+	
+	Algorithm getSquare(square, size)
+	Gets size x size numbers from user and populates square
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of desired square
+	Post:   size x size numbers received from user, added to square
+	Return: nothing
+	
+	for i from 0 to size by one do
+	    for j from 0 to size by one do
+	        square[i][j] <- user input
+	    done
+	done
+	
+    ------
+    
+    Algorithm checkLatinSquare(square, size)
+    Checks if square is a latin square
+
+    Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of desired square
+	Post:   square is unchanged
+	Return: true if square is latin square, false otherwise
+	
+	if checkRows(square, size) == False
+	then
+	    return False
+	else if checkColumns(square, size) == False
+	then
+	    return False
+	else
+	    return True
+	done
+	
+======================
+
+Exercise 6:
+
+	Application's Purpose:
+	To randomize an existing latin square by randomly shuffling rows and columns
+	
+	Algorithm swapElement(square, row1, row2, col1, col2)
+	Swaps element in position (row1, col1) with element in position (row2, col2) in square
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        row1   :: Integer -- row number of first Integer to be swapped
+	        row2   :: Integer -- row number of second Integer to be swapped
+	        col1   :: Integer -- col number of first Integer to be swapped
+	        col2   :: Integer -- col number of second Integer to be swapped
+	Post:   element square[row1][col1] swapped with square[row2][col2]
+	Return: nothing
+	
+	Integer tmp <- square[row1][col1]
+	square[row1][col1] <- square[row2][col2]
+	square[row2][col2] <- tmp
+	
+	------
+	
+	Algorithm swapRows(square, size, row1, row2)
+	Swaps the contents of row1 and row2
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of desired square
+	        row1   :: Integer -- first row to be swapped
+	        row2   :: Integer -- second row to be swapped
+	Post:   contents of row1 and row2 in square are swapped
+	Return: nothing
+	
+	for i from 0 to size by one do
+	    swapElement(square, row1, row2, i, i)
+	done
+	
+	------
+	
+	Algorithm swapColumns(square, size, col1, col2)
+	Swaps the contents of col1 and col2
+	
+    Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of desired square
+	        col1   :: Integer -- first column to be swapped
+	        col2   :: Integer -- second column to be swapped
+	Post:   contents of col1 and col2 are swapped
+	Return: nothing
+	
+	for i from 0 to size by one do
+	    swapElement(square, i, i, col1, col2)
+	done
+	
+    ------
+
+	Algorithm shuffleLatinSquare(square, size)
+	Shuffles given latin square by swapping rows and columns
+	
+    Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of desired square
+	Post:   square is shuffled
+	Return: nothing
+	
+	Integer numShuffles <- random number between 50 and 100
+	
+	for i from 0 to numShuffles by one do
+	    Integer row1 <- random number between 0 and size-1
+	    Integer row2 <- random number between 0 and size-1
+	    Integer col1 <- random number between 0 and size-1
+	    Integer col2 <- random number between 0 and size-1
+	    
+	    choice < random number between 0 and 100
+	    if choice > 50 then 
+		swapRows(square, row1, row2)
+	    else 
+	        swapColumns(square, col1, col2)
+	done
+	
+======================
+
+Exercise 7:
+
+	Application's Purpose:
+	Shuffle latin square to create a sudoku puzzle
+	
+	------
+	
+	Algorithm pickTriad()
+	Picks one of the three triads to shuffle
+	
+	Pre:    none
+	Post:   nothing is changed
+	Return: 0, 1, or 2; representing the corresponding triad to shuffle
+	
+	return random number between 0 and 2, inclusive
+	
+	------
+	
+	Algorithm pickLinesInTriad(triad, line1, line2)
+	Picks two rows/columns to be swapped in the given triad
+	
+	Pre:    triad :: Integer -- the triad of rows/columns to be chosen from
+	        line1:: refToInteger -- pointer to return first row/col in
+	        line2:: refToInteger -- pointer to return second row/col in
+	Post:   line1 and line 2 contain the two resulting lines to return
+	Return: nothing
+	
+	
+	Integer swap1 <- random number between [triad * 3, triad * 3 + 2]
+	Integer swap2 <- random number between [triad * 3, triad * 3 + 2]
+    
+    while swap2 == swap1 do
+        swap2 <- random number between [triad * 3, triad * 3 + 2]
+    done
+	
+	*line1 <- swap1
+	*line2 <- swap2
+	
+	------
+	
+	
+	Algorithm pickLines(line1, line2)
+	Picks 2 rows/columns to swap
+	
+	Pre:    line1:: refToInteger -- pointer to return first row/col in
+	        line2:: refToInteger -- pointer to return second row/col in
+	Post:   resulting line numbers are placed in the two pointers
+	Return: nothing
+	
+	Integer triad <- pickTriad()
+	
+	pickLinesInTriad(triad, line1, line2)
+	
+	
+	------
+
+    Algorithm addBlanks(square, size, percentBlank)
+    Adds percentBlank blanks in square; blanks represented as value -1
+    
+    Pre:    square       :: shared size x size arrayOfIntegers
+            size         :: Integer -- size of width or height of square
+            percentBlank :: Float -- percentage of square that should be blanked out [0:1]
+    Post:   percentBlank % of the square's elements are replaced with '-1'
+    Return: nothing
+
+    Integer numBlanks <- percentBlank * size * size
+    Integer blankCount <- 0
+    
+    while blankCount < numBlanks do
+        Integer rowBlank <- random number from 0 to size
+        Integer colBlank <- random number from 0 to size
+        
+        if square[rowBlank][colBlank] != -1
+        then
+            square[rowBlank][colBlank] <- -1
+            blankCount++
+        done
+    done
+
+    ------
+
+	Algorithm sudokuShuffle(square, size)
+	Shuffles latin square to maintain sudoku restrictions, only shuffle rows/columns within their 
+	respective third of the square.
+	
+	Pre:    square :: shared size x size arrayOfIntegers
+	        size   :: Integer -- size of width or height of square
+	Post:   square is shuffled according to sudoku restrictions.  Blanks are created by removing random
+			elements in the square.
+	Return: nothing
+	
+	
+	Integer numShuffles <- random number between 20 and 50
+	
+	for i from 0 to numShuffles by one do
+	    Integer row1
+	    Integer row2
+	    Integer col1
+	    Integer col2
+	    
+	    pickLines(&row1, &row2)
+	    pickLines(&col1, &col2)
+	    
+	    swapRows(square, size, row1, row2)
+	    swapColumns(square, size, col1, col2)
+	done
+	
+	addBlanks(square, size, 0.20)
+	
+	
+	
+	
+	
+	
+	
+	
+	

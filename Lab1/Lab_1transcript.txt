@@ -1,0 +1,123 @@
+NAME: Shiqiang Liang
+NSID: shl083
+Course: CMPT115-04
+LAB:lab1
+
+
+Last login: Mon Jan 11 19:36:43 on ttys000
+ismac21:~ shl083$ pwd
+/student/machome/shl083
+ismac21:~ shl083$ ls
+Desktop		Downloads	Movies		Pictures
+Documents	Library		Music
+ismac21:~ shl083$ ls -la
+total 359
+drwx------    11 shl083  student    4096 11 Jan 19:40 .
+drwxr-xr-x  3245 root    wheel    122880 10 Jan 06:36 ..
+-rw-r--r--@    1 shl083  student   10244 11 Jan 19:41 .DS_Store
+drwx------     4 shl083  student    4096 11 Jan 16:26 .Spotlight-V100
+drwx------     2 shl083  student    4096 11 Jan 19:40 .Trash
+-rw-r--r--     1 shl083  student    4096 11 Jan 16:41 ._.DS_Store
+-rw-r--r--     1 shl083  student    4096 11 Jan 16:26 ._Library
+-rw-------     1 shl083  student     746 11 Jan 19:42 .bash_history
+drwx------     2 shl083  student    4096 11 Jan 16:26 Desktop
+drwx------     2 shl083  student    4096 11 Jan 16:31 Documents
+drwx------     2 shl083  student    4096 11 Jan 17:43 Downloads
+drwxr-xr-x@   30 shl083  student    4096 11 Jan 19:00 Library
+drwx------     2 shl083  student    4096 11 Jan 16:32 Movies
+drwx------     2 shl083  student    4096 11 Jan 16:32 Music
+drwx------     2 shl083  student    4096 11 Jan 16:32 Pictures
+ismac21:~ shl083$ mkdir cmpt115
+ismac21:~ shl083$ ls
+Desktop		Downloads	Movies		Pictures
+Documents	Library		Music		cmpt115
+ismac21:~ shl083$ cd cmpt115
+ismac21:cmpt115 shl083$ pwd
+/student/machome/shl083/cmpt115
+ismac21:cmpt115 shl083$ ls
+lab1file.txt
+ismac21:cmpt115 shl083$ more lab1file.txt
+Coding on Mac is cool.
+Shiqiang Liang shl083
+ismac21:cmpt115 shl083$ cd .
+ismac21:cmpt115 shl083$ ls .
+lab1file.txt
+ismac21:cmpt115 shl083$ cd ..
+ismac21:~ shl083$ pwd
+/student/machome/shl083
+ismac21:~ shl083$ ls
+Desktop		Downloads	Movies		Pictures
+Documents	Library		Music		cmpt115
+ismac21:~ shl083$ cd cmpt115
+ismac21:cmpt115 shl083$ cd lab1
+ismac21:lab1 shl083$ pwd
+/student/machome/shl083/cmpt115/lab1
+ismac21:lab1 shl083$ mkdir test\ folder
+ismac21:lab1 shl083$ cd test\ folder
+ismac21:test folder shl083$ cd ..
+ismac21:lab1 shl083$ g++ -Wall source.cc
+source.cc:7:17: warning: using directive refers to implicitly-defined namespace
+      'std'
+using namespace std;
+                ^
+1 warning generated.
+ismac21:lab1 shl083$ ls
+a.out		source.cc	test folder
+ismac21:lab1 shl083$ ./a.out
+ismac21:lab1 shl083$ g++ -Wall printnumbers.cc
+printnumbers.cc:3:17: warning: using directive refers to implicitly-defined
+      namespace 'std'
+using namespace std;
+                ^
+printnumbers.cc:15:39: error: use of undeclared identifier 'fs'
+             << "\nYou didn't lose, you " << fs << "!\n";
+                                             ^
+1 warning and 1 error generated.
+ismac21:lab1 shl083$ g++ -Wall printnumbers.cc
+printnumbers.cc:3:17: warning: using directive refers to implicitly-defined
+      namespace 'std'
+using namespace std;
+                ^
+1 warning generated.
+ismac21:lab1 shl083$ ./a.out
+
+Here's the answer: 42
+The cake is a lie: 3.14159
+You didn't lose, you 1!
+ismac21:lab1 shl083$ g++ -Wall printnumbers.cc
+printnumbers.cc:3:17: warning: using directive refers to implicitly-defined
+      namespace 'std'
+using namespace std;
+                ^
+printnumbers.cc:17:21: error: expected ';' after return statement
+        return EXIT_SUCCESS
+                           ^
+                           ;
+1 warning and 1 error generated.
+ismac21:lab1 shl083$ g++ -Wall printnumbers.cc
+ismac21:lab1 shl083$ ./a.out
+
+Here's the answer: 42
+The cake is a lie: 3.14159
+You didn't lose, you 1!
+ismac21:lab1 shl083$ more printnumbers.cc
+// Prints out some numbers.
+
+
+#include <cstdlib>
+#include <iostream>
+using namespace std;
+// main program entry point
+int main() {
+
+        int i = 42;
+        float f1 = 3.14159, f2 = 1.0;
+        
+        cout << "\nHere's the answer: " << i 
+             << "\nThe cake is a lie: " << f1 
+             << "\nYou didn't lose, you " << f2 << "!\n";
+
+        return EXIT_SUCCESS; 
+}
+ismac21:lab1 shl083$ 
+ismac21:lab1 shl083$ 
